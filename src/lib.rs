@@ -86,8 +86,7 @@ fn kmain() {
 	my_uart.init();
 
 	// Now test println! macro!
-	println!("This is my operating system!");
-	println!("I'm so awesome. If you start typing something, I'll show you what you typed!");
+	println!("nelo v0.0.1-dev");
 
 	// Now see if we can read stuff:
 	// Usually we can use #[test] modules in Rust, but it would convolute the

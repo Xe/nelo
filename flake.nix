@@ -31,7 +31,7 @@
         };
         in {
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [ rust qemu riscv-toolchain.buildPackages.gcc riscv-toolchain.buildPackages.binutils ];
+          buildInputs = with pkgs; [ zig rust tinyemu qemu riscv-toolchain.buildPackages.gcc riscv-toolchain.buildPackages.binutils ];
         };
       });
 }
