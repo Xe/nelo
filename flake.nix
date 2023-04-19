@@ -22,9 +22,16 @@
           extensions = [ "rust-src" "rustfmt" "rust-analyzer" ];
           targets = [ "wasm32-wasi" "riscv64gc-unknown-none-elf" ];
         };
+
+        riscv-toolchain = import nixpkgs {
+          localSystem = "${system}";
+          crossSystem = {
+            config = "riscv64-unknown-linux-gnu";
+          };
+        };
         in {
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [ rust qemu ];
+          buildInputs = with pkgs; [ rust qemu riscv-toolchain.buildPackages.gcc riscv-toolchain.buildPackages.binutils ];
         };
       });
 }
