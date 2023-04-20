@@ -32,27 +32,27 @@ _start:
 	# Set all bytes in the BSS section to zero.
 	la 		a0, _bss_start
 	la		a1, _bss_end
-	bgeu	a0, a1, 2f
+	bgeu	        a0, a1, 2f
 1:
 	sd		zero, (a0)
-	addi	a0, a0, 8
-	bltu	a0, a1, 1b
+	addi	        a0, a0, 8
+	bltu	        a0, a1, 1b
 2:
 	# Control registers, set the stack, mstatus, mepc,
 	# and mtvec to return to the main function.
 	# li		t5, 0xffff;
 	# csrw	medeleg, t5
 	# csrw	mideleg, t5
-	la		sp, _stack
+	la		sp, _stack_end
 	# Setting `mstatus` register:
 	# 0b11 << 11: Machine's previous protection mode is 3 (MPP=3).
 	# 1 << 7    : Machine's previous interrupt-enable bit is 1 (MPIE=1).
 	# 1 << 3    : Machine's interrupt-enable bit is 1 (MIE=1).
 	li		t0, (0b11 << 11) | (1 << 7) | (1 << 3)
-	csrw	mstatus, t0
+	csrw	        mstatus, t0
 	# Machine's exception program counter (MEPC) is set to `kmain`.
 	la		t1, kmain
-	csrw	mepc, t1
+	csrw	        mepc, t1
 	# Machine's trap vector base address is set to `asm_trap_vector`.
 	la		t2, asm_trap_vector
 	csrw	        mtvec, t2
@@ -62,7 +62,7 @@ _start:
 	# 1 << 11: Machine's external interrupt-enable bit is 1 (MEIE=1).
 	#li		t3, (1 << 3) | (1 << 7) | (1 << 11)
 	li		t3, (1 << 3) | (1 << 11)
-	csrw	mie, t3
+	csrw	        mie, t3
 	# Set the return address to infinitely wait for interrupts.
 	la		ra, 4f
 	# We use mret here so that the mstatus register is properly updated.
